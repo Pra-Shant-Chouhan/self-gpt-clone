@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -47,7 +48,7 @@ export default function RootLayout({
             </ThemeProvider>
           </QueryProvider>
         </ClerkProvider>
-
+        <Toaster />
       </body>
     </html>
   );

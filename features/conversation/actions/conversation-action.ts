@@ -38,7 +38,7 @@ async function assertOwnsConversation(conversationId: string, userId: string) {
 export async function listConversations(): Promise<ConversationListItem[]> {
     const user = await requireUser();
     return prisma.conversation.findMany({
-        where: { userId: user.id },
+        where: { userId: user.id, isArchived: false },
         orderBy: [{
             isPinned: 'desc',
         }, {
@@ -57,11 +57,11 @@ export async function listConversations(): Promise<ConversationListItem[]> {
 }
 
 
-export async function createConversation(title: string): Promise<ConversationListItem> {
+export async function createConversation(title?: string): Promise<ConversationListItem> {
     const user = await requireUser();
     return prisma.conversation.create({
         data: {
-            title: title.trim() || "New Conversation",
+            title: title?.trim() || "New Conversation",
             userId: user.id
         },
         select: {
@@ -118,3 +118,4 @@ export async function updateConversation(
     revalidatePath(`/c/${conversationId}`);
     return conversation;
 }
+
