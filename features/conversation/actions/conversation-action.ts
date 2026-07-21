@@ -15,6 +15,11 @@ export type ConversationListItem = {
     createdAt: Date;
     updatedAt: Date;
 }
+export async function getConversation(conversationId: string) {
+    const user = await requireUser();
+    return assertOwnsConversation(conversationId, user.id);
+}
+
 
 /**
  * Verifies that a conversation exists and belongs to the given user.
